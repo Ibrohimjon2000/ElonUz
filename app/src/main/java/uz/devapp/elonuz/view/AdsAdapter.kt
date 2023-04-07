@@ -20,7 +20,7 @@ class AdsAdapter(val items: List<AdsModel>) : RecyclerView.Adapter<AdsAdapter.Vh
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
         val adsModel = items[position]
-        holder.binding.imgAds.loadImage(adsModel.main_image)
+        holder.binding.imgAds.loadImage(adsModel.mainImage)
         holder.binding.tvName.text = adsModel.name
         holder.binding.tvAddress.text = adsModel.address
         holder.binding.tvPrice.text = "${adsModel.price} UZS"

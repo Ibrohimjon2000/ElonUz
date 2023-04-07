@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import uz.devapp.elonuz.R
-import uz.devapp.elonuz.data.models.AdsModel
-import uz.devapp.elonuz.data.models.CategoryModel
+import uz.devapp.elonuz.data.models.request.AdsFilter
 import uz.devapp.elonuz.databinding.FragmentMainBinding
 import uz.devapp.elonuz.view.AdsAdapter
 import uz.devapp.elonuz.view.HorizontalCategoryAdapter
@@ -42,18 +40,9 @@ class MainFragment : Fragment() {
                 rvCategory.adapter=HorizontalCategoryAdapter(it)
             }
 
-            rvAds.adapter=AdsAdapter(listOf(
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-                AdsModel(1,"Samsung Galaxy S23 Ultra","upload/category/image/jxVkh0GY2bKHZvBsIJFV.png","Yaxshi","Fergana","+998911175920",1200000.0,listOf("")),
-            ))
+            viewModel.adsListLiveData.observe(requireActivity()){
+                rvAds.adapter=AdsAdapter(it)
+            }
             loadData()
         }
         return binding.root
@@ -61,6 +50,7 @@ class MainFragment : Fragment() {
 
     fun loadData(){
         viewModel.getCategories()
+        viewModel.getAds(AdsFilter())
     }
 
     companion object {
