@@ -2,6 +2,7 @@ package uz.devapp.elonuz.data.models
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class AdsModel(
     @SerializedName("address")
@@ -40,4 +41,4 @@ data class AdsModel(
     val updatedAt: Any,
     @SerializedName("user_id")
     val userId: Int
-)
+) : Serializable

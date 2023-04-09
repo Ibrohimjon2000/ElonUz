@@ -1,10 +1,13 @@
-package uz.devapp.elonuz.view
+package uz.devapp.elonuz.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.devapp.elonuz.data.models.AdsModel
 import uz.devapp.elonuz.databinding.AdsItemLayoutBinding
+import uz.devapp.elonuz.main.ads.AdsDetailActivity
+import uz.devapp.elonuz.utils.Constants
 import uz.devapp.elonuz.utils.loadImage
 
 class AdsAdapter(val items: List<AdsModel>) : RecyclerView.Adapter<AdsAdapter.Vh>() {
@@ -20,6 +23,11 @@ class AdsAdapter(val items: List<AdsModel>) : RecyclerView.Adapter<AdsAdapter.Vh
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
         val adsModel = items[position]
+        holder.itemView.setOnClickListener {
+            val intent= Intent(it.context, AdsDetailActivity::class.java)
+            intent.putExtra(Constants.EXTRA_DATA,adsModel)
+           it.context.startActivity(intent)
+        }
         holder.binding.imgAds.loadImage(adsModel.mainImage)
         holder.binding.tvName.text = adsModel.name
         holder.binding.tvAddress.text = adsModel.address

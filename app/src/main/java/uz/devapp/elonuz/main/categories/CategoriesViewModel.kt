@@ -1,4 +1,4 @@
-package uz.devapp.elonuz.main.home
+package uz.devapp.elonuz.main.categories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,9 +10,8 @@ import uz.devapp.elonuz.data.models.CategoryModel
 import uz.devapp.elonuz.data.models.request.AdsFilter
 import uz.devapp.elonuz.data.repository.UserRepository
 import uz.devapp.elonuz.data.repository.sealed.DataResult
-import uz.devapp.elonuz.utils.PrefUtils
 
-class MainViewModel : ViewModel() {
+class CategoriesViewModel : ViewModel() {
     val repository = UserRepository()
 
     private var _errorLiveData = MutableLiveData<String>()
@@ -36,7 +35,6 @@ class MainViewModel : ViewModel() {
                     _errorLiveData.value = result.message
                 }
                 is DataResult.Success -> {
-                    PrefUtils.setCategories(result.result)
                     _categoriesListLiveData.value = (result.result)
                 }
             }
@@ -44,22 +42,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getRegions() {
-        viewModelScope.launch {
-            val result = repository.getRegions()
-            when (result) {
-                is DataResult.Error -> {
-                    _errorLiveData.value = result.message
-                }
-                is DataResult.Success -> {
-                    PrefUtils.setRegions(result.result)
-                }
-            }
-        }
-    }
-
     fun getAds(filter: AdsFilter) {
         viewModelScope.launch {
+            _progressLiveData.value=true
             val result = repository.getAds(filter)
             when (result) {
                 is DataResult.Error -> {
@@ -69,6 +54,7 @@ class MainViewModel : ViewModel() {
                     _adsListLiveData.value = (result.result)
                 }
             }
+            _progressLiveData.value=false
         }
     }
 }

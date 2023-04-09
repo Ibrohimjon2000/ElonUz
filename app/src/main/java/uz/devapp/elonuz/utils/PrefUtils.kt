@@ -2,9 +2,13 @@ package uz.devapp.elonuz.utils
 
 import com.orhanobut.hawk.Hawk
 import uz.devapp.elonuz.MyApp
+import uz.devapp.elonuz.data.models.CategoryModel
+import uz.devapp.elonuz.data.models.RegionModel
 
 object PrefUtils {
     const val PREF_TOKEN = "token"
+    const val PREF_CATEGORIES = "categories"
+    const val PREF_REGIONS = "regions"
 
     fun init() {
         Hawk.init(MyApp.app).build()
@@ -16,6 +20,22 @@ object PrefUtils {
 
     fun getToken(): String {
         return Hawk.get(PREF_TOKEN, "")
+    }
+
+    fun setCategories(value: List<CategoryModel>) {
+        Hawk.put(PREF_CATEGORIES, value)
+    }
+
+    fun getCategories(): List<CategoryModel> {
+        return Hawk.get(PREF_CATEGORIES, listOf())
+    }
+
+    fun setRegions(value: List<RegionModel>) {
+        Hawk.put(PREF_REGIONS, value)
+    }
+
+    fun getRegions(): List<RegionModel> {
+        return Hawk.get(PREF_REGIONS, listOf())
     }
 
     fun clear() {

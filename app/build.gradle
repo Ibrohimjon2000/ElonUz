@@ -69,4 +69,6 @@ dependencies {
     implementation("org.greenrobot:eventbus:3.3.1")
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    implementation 'com.github.Drjacky:ImagePicker:2.3.22'
 }

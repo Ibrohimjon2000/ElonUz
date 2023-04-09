@@ -8,4 +8,4 @@ data class Region(
     val id: Int,
     @SerializedName("region_name")
     val regionName: String
-)
+):java.io.Serializable

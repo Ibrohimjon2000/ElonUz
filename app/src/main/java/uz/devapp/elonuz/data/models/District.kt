@@ -10,4 +10,4 @@ data class District(
     val id: Int,
     @SerializedName("region_id")
     val regionId: Int
-)
+):java.io.Serializable

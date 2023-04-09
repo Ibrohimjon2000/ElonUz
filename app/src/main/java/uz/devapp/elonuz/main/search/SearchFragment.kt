@@ -1,60 +1,87 @@
 package uz.devapp.elonuz.main.search
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import uz.devapp.elonuz.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import uz.devapp.elonuz.adapters.AdsAdapter
+import uz.devapp.elonuz.data.models.request.AdsFilter
+import uz.devapp.elonuz.databinding.FragmentSearchBinding
+import uz.devapp.elonuz.main.ads.AdsViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentSearchBinding
+    lateinit var viewModel: AdsViewModel
+    var keyword = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        binding.apply {
+            viewModel = ViewModelProvider(this@SearchFragment)[AdsViewModel::class.java]
+
+            viewModel.errorLiveData.observe(requireActivity()) {
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            }
+
+            viewModel.progressLiveData.observe(requireActivity()) {
+                swipe.isRefreshing = it
+            }
+
+            viewModel.adsListLiveData.observe(requireActivity()) {
+                rv.adapter = AdsAdapter(it)
+                lottie.visibility = if (it!!.isNotEmpty()) View.GONE else View.VISIBLE
+            }
+
+            swipe.setOnRefreshListener {
+                loadData(keyword)
+            }
+
+            search.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    keyword = p0.toString()
+                    if (keyword.isNotEmpty()) {
+                        clearText.visibility = View.VISIBLE
+                    } else {
+                        clearText.visibility = View.GONE
+                        loadData(keyword)
+                    }
+                    if (keyword.count() > 1)
+                        loadData(keyword)
+                }
+            })
+            clearText.setOnClickListener {
+                binding.search.setText("")
+                loadData("")
+            }
+
+            loadData(keyword)
+        }
+        return binding.root
+    }
+
+    private fun loadData(keyword: String) {
+        viewModel.getAds(AdsFilter(keyword = keyword))
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = SearchFragment()
     }
 }

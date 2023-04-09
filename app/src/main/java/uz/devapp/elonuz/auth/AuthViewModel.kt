@@ -1,4 +1,4 @@
-package uz.devapp.elonuz.main.home
+package uz.devapp.elonuz.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,11 +8,14 @@ import kotlinx.coroutines.launch
 import uz.devapp.elonuz.data.models.AdsModel
 import uz.devapp.elonuz.data.models.CategoryModel
 import uz.devapp.elonuz.data.models.request.AdsFilter
+import uz.devapp.elonuz.data.models.request.LoginRequest
+import uz.devapp.elonuz.data.models.request.RegistrationRequest
+import uz.devapp.elonuz.data.models.response.AuthResponse
 import uz.devapp.elonuz.data.repository.UserRepository
 import uz.devapp.elonuz.data.repository.sealed.DataResult
 import uz.devapp.elonuz.utils.PrefUtils
 
-class MainViewModel : ViewModel() {
+class AuthViewModel : ViewModel() {
     val repository = UserRepository()
 
     private var _errorLiveData = MutableLiveData<String>()
@@ -21,54 +24,40 @@ class MainViewModel : ViewModel() {
     private var _progressLiveData = MutableLiveData<Boolean>()
     var progressLiveData: LiveData<Boolean> = _progressLiveData
 
-    private var _categoriesListLiveData = MutableLiveData<List<CategoryModel>>()
-    var categoriesListLiveData: LiveData<List<CategoryModel>> = _categoriesListLiveData
+    private var _authListLiveData = MutableLiveData<AuthResponse>()
+    var authListLiveData: LiveData<AuthResponse> = _authListLiveData
 
-    private var _adsListLiveData = MutableLiveData<List<AdsModel>>()
-    var adsListLiveData: LiveData<List<AdsModel>> = _adsListLiveData
-
-    fun getCategories() {
-        _progressLiveData.value = true
+    fun registration(request: RegistrationRequest) {
         viewModelScope.launch {
-            val result = repository.getCategories()
+            _progressLiveData.value = true
+            val result = repository.registration(request)
             when (result) {
                 is DataResult.Error -> {
                     _errorLiveData.value = result.message
                 }
                 is DataResult.Success -> {
-                    PrefUtils.setCategories(result.result)
-                    _categoriesListLiveData.value = (result.result)
+                    PrefUtils.setToken(result.result.token)
+                    _authListLiveData.value = (result.result)
                 }
             }
             _progressLiveData.value = false
         }
     }
 
-    fun getRegions() {
+    fun login(request: LoginRequest) {
         viewModelScope.launch {
-            val result = repository.getRegions()
+            _progressLiveData.value = true
+            val result = repository.login(request)
             when (result) {
                 is DataResult.Error -> {
                     _errorLiveData.value = result.message
                 }
                 is DataResult.Success -> {
-                    PrefUtils.setRegions(result.result)
+                    PrefUtils.setToken(result.result.token)
+                    _authListLiveData.value = (result.result)
                 }
             }
-        }
-    }
-
-    fun getAds(filter: AdsFilter) {
-        viewModelScope.launch {
-            val result = repository.getAds(filter)
-            when (result) {
-                is DataResult.Error -> {
-                    _errorLiveData.value = result.message
-                }
-                is DataResult.Success -> {
-                    _adsListLiveData.value = (result.result)
-                }
-            }
+            _progressLiveData.value = false
         }
     }
 }

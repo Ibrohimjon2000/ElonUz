@@ -1,16 +1,20 @@
 package uz.devapp.elonuz.main.home
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import uz.devapp.elonuz.adapters.AdsAdapter
+import uz.devapp.elonuz.adapters.HorizontalCategoryAdapter
+import uz.devapp.elonuz.auth.LoginActivity
 import uz.devapp.elonuz.data.models.request.AdsFilter
 import uz.devapp.elonuz.databinding.FragmentMainBinding
-import uz.devapp.elonuz.view.AdsAdapter
-import uz.devapp.elonuz.view.HorizontalCategoryAdapter
+import uz.devapp.elonuz.main.add_ad.AddAdsActivity
+import uz.devapp.elonuz.utils.PrefUtils
 
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
@@ -20,37 +24,49 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding= FragmentMainBinding.inflate(inflater,container,false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
         binding.apply {
-            viewModel=ViewModelProvider(this@MainFragment)[MainViewModel::class.java]
+            viewModel = ViewModelProvider(this@MainFragment)[MainViewModel::class.java]
 
-            viewModel.errorLiveData.observe(requireActivity()){
+            viewModel.errorLiveData.observe(requireActivity()) {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
             }
 
-            viewModel.progressLiveData.observe(requireActivity()){
-                swipe.isRefreshing=it
+            viewModel.progressLiveData.observe(requireActivity()) {
+                swipe.isRefreshing = it
             }
 
             swipe.setOnRefreshListener {
                 loadData()
             }
 
-            viewModel.categoriesListLiveData.observe(requireActivity()){
-                rvCategory.adapter=HorizontalCategoryAdapter(it)
+            imgAddAds.setOnClickListener {
+                startActivity(
+                    Intent(
+                        requireActivity(),
+                        if (PrefUtils.getToken()
+                                .isEmpty()
+                        ) LoginActivity::class.java else AddAdsActivity::class.java
+                    )
+                )
             }
 
-            viewModel.adsListLiveData.observe(requireActivity()){
-                rvAds.adapter=AdsAdapter(it)
+            viewModel.categoriesListLiveData.observe(requireActivity()) {
+                rvCategory.adapter = HorizontalCategoryAdapter(it.filter { it.parentId == 0 }, it)
+            }
+
+            viewModel.adsListLiveData.observe(requireActivity()) {
+                rvAds.adapter = AdsAdapter(it)
             }
             loadData()
         }
         return binding.root
     }
 
-    fun loadData(){
+    fun loadData() {
         viewModel.getCategories()
         viewModel.getAds(AdsFilter())
+        viewModel.getRegions()
     }
 
     companion object {

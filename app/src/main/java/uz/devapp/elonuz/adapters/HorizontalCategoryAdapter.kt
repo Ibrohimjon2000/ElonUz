@@ -1,13 +1,17 @@
-package uz.devapp.elonuz.view
+package uz.devapp.elonuz.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.devapp.elonuz.data.models.CategoryModel
 import uz.devapp.elonuz.databinding.CategoryItemLayoutBinding
+import uz.devapp.elonuz.main.ads.AdsActivity
+import uz.devapp.elonuz.main.categories.CategoriesActivity
+import uz.devapp.elonuz.utils.Constants
 import uz.devapp.elonuz.utils.loadImage
 
-class HorizontalCategoryAdapter(val items:List<CategoryModel>):RecyclerView.Adapter<HorizontalCategoryAdapter.Vh>() {
+class HorizontalCategoryAdapter(val items:List<CategoryModel>,val fullItems:List<CategoryModel>):RecyclerView.Adapter<HorizontalCategoryAdapter.Vh>() {
     inner class Vh(val binding: CategoryItemLayoutBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
@@ -20,6 +24,11 @@ class HorizontalCategoryAdapter(val items:List<CategoryModel>):RecyclerView.Adap
 
     override fun onBindViewHolder(holder: Vh, position: Int) {
         val categoryModel = items[position]
+        holder.itemView.setOnClickListener {
+            val intent=Intent(it.context,if (fullItems.filter { it.parentId==categoryModel.id}.isEmpty()) AdsActivity::class.java else CategoriesActivity::class.java)
+            intent.putExtra(Constants.EXTRA_DATA,categoryModel)
+            it.context.startActivity(intent)
+        }
         holder.binding.tvCategory.text=categoryModel.title
         holder.binding.imgCategory.loadImage(categoryModel.image)
     }

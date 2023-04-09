@@ -16,6 +16,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".main.ads.AdsDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.add_ad.category.SelectCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.add_ad.region.SelectRegionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.RegistrationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.add_ad.AddAdsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.ads.AdsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.categories.CategoriesActivity"
+            android:exported="false" />
+        <activity
             android:name=".splash.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -26,7 +50,7 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
