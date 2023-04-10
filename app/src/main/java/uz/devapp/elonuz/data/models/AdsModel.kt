@@ -35,6 +35,8 @@ data class AdsModel(
     val regionId: Int,
     @SerializedName("review_count")
     val reviewCount: Int,
+    @SerializedName("date")
+    val date:String,
     @SerializedName("status")
     val status: String,
     @SerializedName("updated_at")

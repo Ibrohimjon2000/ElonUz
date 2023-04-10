@@ -1,5 +1,6 @@
 package uz.devapp.elonuz.main.add_ad
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.drjacky.imagepicker.constant.ImageProvider
+import com.permissionx.guolindev.PermissionX
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -63,10 +65,17 @@ class AddAdsActivity : AppCompatActivity() {
             }
 
             imgAds.setOnClickListener {
-                ImagePicker.with(this@AddAdsActivity)
-                    .provider(ImageProvider.BOTH) //Or bothCameraGallery()
-                    .crop()
-                    .createIntentFromDialog { launcher.launch(it) }
+                PermissionX.init(this@AddAdsActivity)
+                    .permissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    .request { allGranted, grantedList, deniedList ->
+                        ImagePicker.with(this@AddAdsActivity)
+                            .provider(ImageProvider.BOTH)
+                            .crop()
+                            .createIntentFromDialog { launcher.launch(it) }
+                    }
             }
 
             edRegion.setOnClickListener {
@@ -104,15 +113,12 @@ class AddAdsActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
-                // Use the uri to load the image
-                // Only if you are not using crop feature:
                 uri.let { galleryUri ->
                     selectedImagePath = galleryUri.path ?: ""
                     Glide.with(this)
                         .load(galleryUri)
                         .into(binding.imgAds)
                 }
-                //////////////
             }
         }
 
