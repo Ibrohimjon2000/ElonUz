@@ -40,7 +40,6 @@ class RegionAdapter(val items: List<RegionModel>, val callback: RegionAdapterCal
             item.active = true
             notifyDataSetChanged()
         }
-
         holder.binding.tvName.text = item.nameUz
         holder.binding.rv.adapter = DistrictAdapter(item.districts, callback)
         holder.binding.rv.visibility = if (item.active) View.VISIBLE else View.GONE

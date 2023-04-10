@@ -2,6 +2,7 @@ package uz.devapp.elonuz.main.add_ad.category
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.DividerItemDecoration
 import org.greenrobot.eventbus.EventBus
 import uz.devapp.elonuz.adapters.CategoryAdapter
 import uz.devapp.elonuz.adapters.CategoryAdapterCallback
@@ -19,6 +20,9 @@ class SelectCategoryActivity : AppCompatActivity(),CategoryAdapterCallback {
         super.onCreate(savedInstanceState)
         binding= ActivitySelectCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val dividerItemDecoration =
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        binding.rv.addItemDecoration(dividerItemDecoration)
         binding.rv.adapter= CategoryAdapter(PrefUtils.getCategories(),this)
     }
 

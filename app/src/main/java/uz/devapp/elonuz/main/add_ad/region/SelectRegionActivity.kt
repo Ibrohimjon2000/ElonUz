@@ -2,6 +2,7 @@ package uz.devapp.elonuz.main.add_ad.region
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.DividerItemDecoration
 import org.greenrobot.eventbus.EventBus
 import uz.devapp.elonuz.adapters.RegionAdapter
 import uz.devapp.elonuz.adapters.RegionAdapterCallback
@@ -17,6 +18,9 @@ class SelectRegionActivity : AppCompatActivity(),RegionAdapterCallback {
         super.onCreate(savedInstanceState)
         binding= ActivitySelectRegionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val dividerItemDecoration =
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        binding.rv.addItemDecoration(dividerItemDecoration)
         binding.rv.adapter=RegionAdapter(PrefUtils.getRegions(),this)
     }
 

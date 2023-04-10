@@ -40,7 +40,6 @@ class CategoryAdapter(val items: List<CategoryModel>, val callback: CategoryAdap
         holder.itemView.setOnClickListener {
             callback.onSelectCategory(item)
         }
-
         holder.binding.tvName.text = item.title
     }
 }

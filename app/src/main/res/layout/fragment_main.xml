@@ -30,10 +30,6 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp">
 
-                    <View
-                        android:layout_width="24dp"
-                        android:layout_height="24dp" />
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -43,12 +39,6 @@
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/imgAddAds"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/baseline_add_24" />
 
                 </LinearLayout>
 
@@ -74,10 +64,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvAds"
                         android:layout_width="match_parent"
-                        tools:listitem="@layout/ads_item_layout"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/ads_item_layout" />
 
                 </LinearLayout>
 
@@ -86,5 +76,14 @@
         </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/imgAddAds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/baseline_add_24" />
 
 </FrameLayout>
