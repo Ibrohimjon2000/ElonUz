@@ -25,14 +25,6 @@ object NetworkingObject {
                             .build()
                         chain.proceed(request)
                     }
-                    .addInterceptor(
-                        ChuckerInterceptor.Builder(MyApp.app)
-                            .collector(ChuckerCollector(MyApp.app))
-                            .maxContentLength(250000L)
-                            .redactHeaders(emptySet())
-                            .alwaysReadResponseBody(false)
-                            .build()
-                    )
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())
