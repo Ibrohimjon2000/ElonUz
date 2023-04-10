@@ -11,6 +11,7 @@ import retrofit2.http.Part
 import uz.devapp.elonuz.data.models.AdsModel
 import uz.devapp.elonuz.data.models.CategoryModel
 import uz.devapp.elonuz.data.models.RegionModel
+import uz.devapp.elonuz.data.models.UserModel
 import uz.devapp.elonuz.data.models.request.AdsFilter
 import uz.devapp.elonuz.data.models.request.LoginRequest
 import uz.devapp.elonuz.data.models.request.RegistrationRequest
@@ -32,6 +33,9 @@ interface Api {
 
     @POST("api/login")
     suspend fun login(@Body request: LoginRequest): Response<BaseResponse<AuthResponse>>
+
+    @GET("api/user")
+    suspend fun getUser(): Response<BaseResponse<UserModel>>
 
     @Multipart
     @POST("api/advertisements/add")

@@ -10,6 +10,7 @@ import uz.devapp.elonuz.data.api.NetworkingObject
 import uz.devapp.elonuz.data.models.AdsModel
 import uz.devapp.elonuz.data.models.CategoryModel
 import uz.devapp.elonuz.data.models.RegionModel
+import uz.devapp.elonuz.data.models.UserModel
 import uz.devapp.elonuz.data.models.request.AdsFilter
 import uz.devapp.elonuz.data.models.request.LoginRequest
 import uz.devapp.elonuz.data.models.request.RegistrationRequest
@@ -120,6 +121,15 @@ class UserRepository : BaseRepository() {
             return@withContext wrapResponse(response)
         } catch (e: Exception) {
             return@withContext DataResult.Error<Boolean>(e.localizedMessage)
+        }
+    }
+
+    suspend fun getUser() = withContext(Dispatchers.IO) {
+        try {
+            val response = api.getUser()
+            return@withContext wrapResponse(response)
+        } catch (e: Exception) {
+            return@withContext DataResult.Error<UserModel>(e.localizedMessage)
         }
     }
 }

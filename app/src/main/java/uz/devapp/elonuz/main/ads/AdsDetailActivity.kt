@@ -13,10 +13,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.permissionx.guolindev.PermissionX
+import uz.devapp.elonuz.R
 import uz.devapp.elonuz.data.models.AdsModel
 import uz.devapp.elonuz.data.models.CategoryModel
 import uz.devapp.elonuz.databinding.ActivityAdsDetailBinding
 import uz.devapp.elonuz.utils.Constants
+import uz.devapp.elonuz.utils.PrefUtils
 import uz.devapp.elonuz.utils.loadImage
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -42,6 +44,12 @@ class AdsDetailActivity : AppCompatActivity() {
             tvPrice.text = adsModel.price.toString() + " UZS"
             tvComment.text = adsModel.comment
             tvName.text = adsModel.name
+
+            if (PrefUtils.checkFavorite(adsModel)) {
+                iconFavorite.setImageResource(R.drawable.baseline_favorite_24)
+            } else {
+                iconFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
+            }
 
             btnCall.setOnClickListener {
                 PermissionX.init(this@AdsDetailActivity)
@@ -69,6 +77,16 @@ class AdsDetailActivity : AppCompatActivity() {
                         intent.data = Uri.parse("sms:" + adsModel.phone)
                         startActivity(intent)
                     }
+            }
+
+            btnFavorite.setOnClickListener {
+                PrefUtils.setFavorites(adsModel)
+
+                if (PrefUtils.checkFavorite(adsModel)) {
+                    iconFavorite.setImageResource(R.drawable.baseline_favorite_24)
+                } else {
+                    iconFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
+                }
             }
         }
     }

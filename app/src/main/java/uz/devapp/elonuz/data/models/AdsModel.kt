@@ -36,7 +36,7 @@ data class AdsModel(
     @SerializedName("review_count")
     val reviewCount: Int,
     @SerializedName("date")
-    val date:String,
+    val date: String,
     @SerializedName("status")
     val status: String,
     @SerializedName("updated_at")
