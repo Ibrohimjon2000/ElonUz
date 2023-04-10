@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#11173C"
     tools:context=".main.profile.ProfileFragment">
 
     <LinearLayout
@@ -15,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="#262B49"
+            app:cardCornerRadius="8dp"
             app:contentPadding="8dp">
 
             <LinearLayout
@@ -24,8 +26,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/baseline_account_circle_24" />
 
@@ -35,10 +37,35 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
-                    tools:text="Ibrohimjon"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Ibrohimjon" />
+
+                <LinearLayout
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/baseline_login_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tizimga kirish"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvPhone"
@@ -46,15 +73,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
-                    tools:text="+998911175920"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:text="+998911175920" />
 
                 <LinearLayout
                     android:id="@+id/lyLogout"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
@@ -68,6 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tizimdan chiqish"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                 </LinearLayout>

@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import uz.devapp.elonuz.R
+import uz.devapp.elonuz.auth.LoginActivity
 import uz.devapp.elonuz.databinding.FragmentProfileBinding
 import uz.devapp.elonuz.main.MainActivity
+import uz.devapp.elonuz.main.add_ad.AddAdsActivity
 import uz.devapp.elonuz.splash.SplashActivity
 import uz.devapp.elonuz.utils.PrefUtils
 
@@ -22,21 +24,38 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding= FragmentProfileBinding.inflate(inflater,container,false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         binding.apply {
-            viewModel=ViewModelProvider(requireActivity())[ProfileViewModel::class.java]
 
-            viewModel.errorLiveData.observe(requireActivity()){
+            if (PrefUtils.getToken().isEmpty()) {
+                login.visibility = View.VISIBLE
+                tvName.visibility = View.GONE
+                tvPhone.visibility = View.GONE
+                lyLogout.visibility = View.GONE
+            } else {
+                login.visibility = View.GONE
+                tvName.visibility = View.VISIBLE
+                tvPhone.visibility = View.VISIBLE
+                lyLogout.visibility = View.VISIBLE
+            }
+
+            login.setOnClickListener {
+                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            }
+
+            viewModel = ViewModelProvider(requireActivity())[ProfileViewModel::class.java]
+
+            viewModel.errorLiveData.observe(requireActivity()) {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
             }
 
-            viewModel.progressLiveData.observe(requireActivity()){
+            viewModel.progressLiveData.observe(requireActivity()) {
                 flProgress.visibility = if (it) View.VISIBLE else View.GONE
             }
 
-            viewModel.userListLiveData.observe(requireActivity()){
-                tvName.text=it.fullname
-                tvPhone.text=it.phone
+            viewModel.userListLiveData.observe(requireActivity()) {
+                tvName.text = it.fullname
+                tvPhone.text = it.phone
             }
 
             lyLogout.setOnClickListener {
@@ -45,7 +64,9 @@ class ProfileFragment : Fragment() {
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(i)
             }
-            viewModel.getUser()
+            if (PrefUtils.getToken().isNotEmpty()) {
+                viewModel.getUser()
+            }
         }
         return binding.root
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple_500"
     tools:context=".main.MainActivity">
 
     <LinearLayout
@@ -20,12 +21,26 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <uz.devapp.elonuz.library.SmoothBottomBar
             android:id="@+id/bottomNavView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/main_menu" />
+            android:layout_height="80dp"
+            app:backgroundColor="@color/purple_700"
+            app:cornerRadius="16dp"
+            app:corners="top_left|top_right"
+            app:iconSize="24dp"
+            app:iconTint="@color/white"
+            app:iconTintActive="@color/white"
+            app:indicatorColor="@color/purple_200"
+            app:indicatorRadius="30dp"
+            app:itemPadding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/main_menu"
+            app:sideMargins="10dp"
+            app:textColor="@color/white"
+            app:textSize="14sp" />
 
     </LinearLayout>
 

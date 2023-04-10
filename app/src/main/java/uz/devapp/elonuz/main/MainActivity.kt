@@ -1,23 +1,31 @@
 package uz.devapp.elonuz.main
 
-import android.content.Intent
 import android.os.Bundle
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import uz.devapp.elonuz.auth.LoginActivity
+import uz.devapp.elonuz.R
 import uz.devapp.elonuz.databinding.ActivityMainBinding
-import uz.devapp.elonuz.main.add_ad.AddAdsActivity
-import uz.devapp.elonuz.utils.PrefUtils
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = binding.fragmentContainerView.getFragment<NavHostFragment>()
-        binding.bottomNavView.setupWithNavController(navHostFragment.navController)
+        val navigationHost =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navigationHost.navController
+        setupSmoothBottomMenu()
+    }
+
+    private fun setupSmoothBottomMenu() {
+        val popupMenu = PopupMenu(this, null)
+        popupMenu.inflate(R.menu.main_menu)
+        val menu = popupMenu.menu
+        binding.bottomNavView.setupWithNavController(menu, navController)
     }
 }

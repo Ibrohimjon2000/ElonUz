@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple_500"
     tools:context=".main.ads.AdsDetailActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -14,31 +15,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imgAds"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/elon"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                app:layout_constraintTop_toBottomOf="@+id/imgAds"
-                android:background="#717171"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                <ImageView
+                    android:id="@+id/imgAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/elon" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnFavorite"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/purple_200"
+                android:layout_marginRight="30dp"
                 app:cardCornerRadius="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imgAds"
+                app:layout_constraintBottom_toBottomOf="@+id/card"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgAds">
+                app:layout_constraintTop_toBottomOf="@+id/card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -64,13 +69,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgAds">
+                app:layout_constraintTop_toBottomOf="@+id/card">
 
                 <TextView
                     android:id="@+id/tvTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2023-04-08"
+                    android:textColor="#CCFFFFFF"
                     android:textSize="16sp" />
 
                 <TextView
@@ -81,7 +87,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="Samsung Galaxy S20"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -91,15 +97,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="150 y.e"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <View
-                    android:layout_marginTop="8dp"
-                    android:background="#717171"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#717171" />
 
 
                 <TextView
@@ -109,7 +115,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="Tavsif"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -121,7 +127,7 @@
                     android:ellipsize="end"
                     android:justificationMode="inter_word"
                     android:text="Mi note 10lite 6/64gb(2020) ideal ochilmagan usta kurmagan iwlawi zur tozza telefon uyaltirmaydi xudo xoxlasa shaxar ichida dastavkasi bor karobkasi bor"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
             </LinearLayout>

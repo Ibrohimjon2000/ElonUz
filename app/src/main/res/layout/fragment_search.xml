@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#11173C"
     tools:context=".main.search.SearchFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,6 +20,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                android:backgroundTint="#131629"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#11173C"
     tools:context=".main.home.MainFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,7 +20,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="#131629">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="E'LON UZ"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -73,6 +74,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvAds"
                         android:layout_width="match_parent"
+                        tools:listitem="@layout/ads_item_layout"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
